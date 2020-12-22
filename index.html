@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock Paper Scissor</title>
+  </head>
+  <body>
+    <div class="container">
+      <img src="rock.png" />
+      <img src="paper.png" />
+      <img src="Scissor.png" />
+    </div>
+    <p>Rock Paper Scissor</p>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        padding: 0 10px;
+        background: #ffddf9;
+        font-family: "Roboto", sans-serif;
+      }
+
+      .container {
+        top: 50px;
+        padding: 50px 0;
+        position: relative;
+        text-align: center;
+        border-radius: 30px;
+        border: 5px solid #f7d2ec;
+        background-image: linear-gradient(
+          to bottom,
+          #ffd3bf,
+          #ffc6b7,
+          #ffb9b3,
+          #ffacb3,
+          #ffa0b6,
+          #ff97b9,
+          #ff8ebd,
+          #ff85c4,
+          #ff7cc8,
+          #ff72ce,
+          #ff69d4,
+          #fd60db
+        );
+      }
+
+      img {
+        width: 140px;
+        height: 140px;
+        margin: auto;
+        text-align: center;
+        padding: 0 20px 0 10px;
+      }
+
+      img:active {
+        transform: translateY(7px);
+      }
+
+      p {
+        margin: 60px 0 0 0;
+        padding: 15px 0;
+        font-size: 30px;
+        text-align: center;
+        letter-spacing: 3px;
+        color: #000000;
+        border-radius: 30px;
+        border: 7px double #f7d2ec;
+        background-image: radial-gradient(
+          circle,
+          #e8caff,
+          #eab6fc,
+          #ee9ff6,
+          #f586ec,
+          #fd68dd
+        );
+      }
+    </style>
+
+    <script>
+      window.onload = function () {
+        var score = 0;
+        var playerChoice;
+        var Data = {
+          0: "Rock",
+          1: "Paper",
+          2: "Scissors",
+        };
+
+        var compChoice = {
+          init: function () {
+            this.store = Math.floor(Math.random() * 3);
+            this.text = Data[this.store];
+          },
+          store: "",
+          text: "",
+        };
+
+        var order = [0, 1, 2, 0];
+        var Winner = function (player, comp) {
+          if (order[player] === order[comp]) {
+            return "It's a tie! 🙃 Try again?";
+          }
+          if (order[player] === order[comp + 1]) {
+            score++;
+            return "You Won! 😁";
+          } else {
+            score--;
+            return "You Lost! 😌";
+          }
+        };
+
+        var paragraph = document.querySelector("p");
+        var assignClick = function (element, pos) {
+          element.addEventListener("click", function () {
+            playerChoice = pos;
+            compChoice.init();
+            paragraph.innerText = "Result : " + "\n";
+            paragraph.innerText += "The Computer Chose: " + compChoice.text;
+            paragraph.innerText +=
+              "\n" + Winner(playerChoice, compChoice.store);
+            paragraph.innerText += "\n" + "Score:" + score;
+          });
+        };
+
+        var images = {
+          tags: document.getElementsByTagName("img"),
+          init: function () {
+            for (var step = 0; step < this.tags.length; step++) {
+              assignClick(this.tags[step], step);
+            }
+          },
+        };
+        images.init();
+      };
+    </script>
+  </body>
+</html>
